@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="task-details">
+        <h2>Task Details</h2>
+        <p><strong>Title:</strong> <%= task.title %></p>
+        <p><strong>Deadline:</strong> <%= task.deadline %></p>
+        <p><strong>Description:</strong> <%= task.description %></p>
+        <div class="subtasks">
+            <h3>Subtasks</h3>
+            <% if(task.subtasks && task.subtasks.length > 0) { %>
+                <ul>
+                    <% task.subtasks.forEach(function(subtask) { %>
+                        <li><%= subtask.title %> - <%= subtask.estimatedDuration %> hours</li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No subtasks found.</p>
+            <% } %>
+        </div>
+        <a href="/tasks">Back to Tasks</a>
+    </div>
+</body>
+</html>

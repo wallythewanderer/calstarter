@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Materialize CSS and Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calstarter</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calstarter</h1>
+        <div class="row">
+            <div class="col s12">
+                <!-- Month and Year Display -->
+                <h4 id="monthYearDisplay"></h4>
+                <!-- Navigation Buttons -->
+                <button onclick="changeMonth(-1)" class="btn waves-effect waves-light"><i class="material-icons">chevron_left</i></button>
+                <button onclick="changeMonth(1)" class="btn waves-effect waves-light"><i class="material-icons">chevron_right</i></button>
+                <button onclick="addEvent()" class="btn waves-effect waves-light green">Add Event</button>
+                <button onclick="addTask()" class="btn waves-effect waves-light blue">Add Task</button>
+
+                <div id="calendar" class="calendar"></div>
+            </div>
+        </div>
+        <!-- Calendar -->
+        <script>
+            let currentDate = new Date();
+        
+            function daysInMonth(month, year) {
+                return new Date(year, month + 1, 0).getDate();
+            }
+        
+            function updateCalendarView() {
+                const monthYearDisplay = document.getElementById('monthYearDisplay');
+                monthYearDisplay.textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        
+                const calendar = document.getElementById('calendar');
+                calendar.innerHTML = ''; // Clear the previous calendar view
+        
+                // Generate the days of the month
+                const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+                const numDays = daysInMonth(currentDate.getMonth(), currentDate.getFullYear());
+        
+                // Create the week days header
+                const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                let weekDaysRow = '<div class="row">';
+                weekDays.forEach(day => {
+                    weekDaysRow += `<div class="col s1"><strong>${day}</strong></div>`;
+                });
+                weekDaysRow += '</div>';
+                calendar.innerHTML += weekDaysRow;
+        
+                // Fill in the days
+                let dayRow = '<div class="row">';
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    dayRow += '<div class="col s1">&nbsp;</div>'; // Fill empty days until first day of month
+                }
+                for (let day = 1; day <= numDays; day++) {
+                    if ((day + firstDayOfMonth - 1) % 7 === 0 && day > 1) {
+                        calendar.innerHTML += dayRow + '</div>'; // End the current row of days
+                        dayRow = '<div class="row">'; // Start a new row
+                    }
+                    dayRow += `<div class="col s1">${day}</div>`; // Add the day
+                }
+                calendar.innerHTML += dayRow + '</div>'; // Add any remaining days
+            }
+        
+            function changeMonth(change) {
+                currentDate.setMonth(currentDate.getMonth() + change);
+                updateCalendarView();
+            }
+        
+            document.addEventListener('DOMContentLoaded', function() {
+                M.AutoInit();
+                updateCalendarView();
+            });
+        </script>        
+    </div>
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        function updateCalendarView() {
+            // Placeholder function to update the calendar view based on currentDate
+            // You would fetch and display events/tasks for the selected month here
+            const monthYearDisplay = document.getElementById('monthYearDisplay');
+            monthYearDisplay.textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            // TODO: Fetch and display events/tasks
+        }
+
+        function changeMonth(change) {
+            // Change the current month and update the calendar view
+            currentDate.setMonth(currentDate.getMonth() + change);
+            updateCalendarView();
+        }
+
+        function addEvent() {
+            // Placeholder function for adding a new event
+            console.log('Add event functionality goes here');
+            // You might want to open a modal or navigate to a form page
+        }
+
+        function addTask() {
+            // Placeholder function for adding a new task
+            console.log('Add task functionality goes here');
+            // Similar to addEvent, implement your logic for adding a task
+        }
+
+        // Initialize the calendar view
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit(); // Initialize Materialize components
+            updateCalendarView(); // Initial update of the calendar to show the current month
+        });
