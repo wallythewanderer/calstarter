@@ -25,7 +25,6 @@
                 <div id="calendar" class="calendar"></div>
             </div>
         </div>
-        <!-- Calendar -->     
     </div>
     <!-- Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -35,8 +34,22 @@
         function daysInMonth(month, year) {
             return new Date(year, month + 1, 0).getDate();
         }
-    
-        function updateCalendarView() {
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit();
+            fetchEventsAndTasks();
+            updateCalendarView();
+        });
+
+        function fetchEventsAndTasks() {
+            fetch('/api/events-tasks')
+                .then(response => response.json())
+                .then(data => {
+                    updateCalendarView(data.events, data.tasks);
+                })
+                .catch(error => console.error('Error fetching events and tasks:', error));
+        }
+
+        function updateCalendarView(events, tasks) {
             const monthYearDisplay = document.getElementById('monthYearDisplay');
             monthYearDisplay.textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
     
@@ -70,12 +83,6 @@
             }
             calendar.innerHTML += dayRow + '</div>'; // Add any remaining days
         }
-    
-        function changeMonth(change) {
-            currentDate.setMonth(currentDate.getMonth() + change);
-            updateCalendarView();
-        }
-    
         document.addEventListener('DOMContentLoaded', function() {
             M.AutoInit();
             updateCalendarView();
@@ -89,20 +96,14 @@
         function addEvent() {
             // Placeholder function for adding a new event
             console.log('Add event functionality goes here');
-            // You might want to open a modal or navigate to a form page
+            // open a modal or navigate to a form page
         }
 
         function addTask() {
             // Placeholder function for adding a new task
             console.log('Add task functionality goes here');
-            // Similar to addEvent, implement your logic for adding a task
+            // Similar to addEvent
         }
-
-        // Initialize the calendar view
-        document.addEventListener('DOMContentLoaded', function() {
-            M.AutoInit(); // Initialize Materialize components
-            updateCalendarView(); // Initial update of the calendar to show the current month
-        });
     </script>
 </body>
 </html>

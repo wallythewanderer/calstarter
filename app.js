@@ -3,7 +3,33 @@ const mysql = require('mysql');
 const app = express();
 const port = 3000;
 
-// You don't need to require body-parser since express has this functionality built-in
+// Route to get events and tasks as JSON
+app.get("/api/events-tasks", (req, res) => {
+    const eventsQuery = "SELECT * FROM Events";
+    const tasksQuery = "SELECT * FROM Tasks";
+    
+    // Execute queries to fetch data (this example assumes both tables exist)
+    db.query(eventsQuery, (err, eventsResult) => {
+        if (err) {
+            console.error('Error fetching events', err);
+            return res.sendStatus(500);
+        }
+
+        db.query(tasksQuery, (err, tasksResult) => {
+            if (err) {
+                console.error('Error fetching tasks', err);
+                return res.sendStatus(500);
+            }
+
+            // Send back a combined JSON object
+            res.json({
+                events: eventsResult,
+                tasks: tasksResult
+            });
+        });
+    });
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 

@@ -82,7 +82,7 @@
                 formData.set('is_repeating', '0');
             }
 
-            fetch(this.action, {
+            fetch(this.getAttribute("action"), {
                 method: 'POST',
                 body: formData
             }).then(response => {
