@@ -25,71 +25,61 @@
                 <div id="calendar" class="calendar"></div>
             </div>
         </div>
-        <!-- Calendar -->
-        <script>
-            let currentDate = new Date();
-        
-            function daysInMonth(month, year) {
-                return new Date(year, month + 1, 0).getDate();
-            }
-        
-            function updateCalendarView() {
-                const monthYearDisplay = document.getElementById('monthYearDisplay');
-                monthYearDisplay.textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-        
-                const calendar = document.getElementById('calendar');
-                calendar.innerHTML = ''; // Clear the previous calendar view
-        
-                // Generate the days of the month
-                const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-                const numDays = daysInMonth(currentDate.getMonth(), currentDate.getFullYear());
-        
-                // Create the week days header
-                const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                let weekDaysRow = '<div class="row">';
-                weekDays.forEach(day => {
-                    weekDaysRow += `<div class="col s1"><strong>${day}</strong></div>`;
-                });
-                weekDaysRow += '</div>';
-                calendar.innerHTML += weekDaysRow;
-        
-                // Fill in the days
-                let dayRow = '<div class="row">';
-                for (let i = 0; i < firstDayOfMonth; i++) {
-                    dayRow += '<div class="col s1">&nbsp;</div>'; // Fill empty days until first day of month
-                }
-                for (let day = 1; day <= numDays; day++) {
-                    if ((day + firstDayOfMonth - 1) % 7 === 0 && day > 1) {
-                        calendar.innerHTML += dayRow + '</div>'; // End the current row of days
-                        dayRow = '<div class="row">'; // Start a new row
-                    }
-                    dayRow += `<div class="col s1">${day}</div>`; // Add the day
-                }
-                calendar.innerHTML += dayRow + '</div>'; // Add any remaining days
-            }
-        
-            function changeMonth(change) {
-                currentDate.setMonth(currentDate.getMonth() + change);
-                updateCalendarView();
-            }
-        
-            document.addEventListener('DOMContentLoaded', function() {
-                M.AutoInit();
-                updateCalendarView();
-            });
-        </script>        
+        <!-- Calendar -->     
     </div>
     <!-- Materialize JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
+            let currentDate = new Date();
+        
+        function daysInMonth(month, year) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+    
         function updateCalendarView() {
-            // Placeholder function to update the calendar view based on currentDate
-            // You would fetch and display events/tasks for the selected month here
             const monthYearDisplay = document.getElementById('monthYearDisplay');
             monthYearDisplay.textContent = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-            // TODO: Fetch and display events/tasks
+    
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = ''; // Clear the previous calendar view
+    
+            // Generate the days of the month
+            const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+            const numDays = daysInMonth(currentDate.getMonth(), currentDate.getFullYear());
+    
+            // Create the week days header
+            const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            let weekDaysRow = '<div class="row">';
+            weekDays.forEach(day => {
+                weekDaysRow += `<div class="col s1"><strong>${day}</strong></div>`;
+            });
+            weekDaysRow += '</div>';
+            calendar.innerHTML += weekDaysRow;
+    
+            // Fill in the days
+            let dayRow = '<div class="row">';
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                dayRow += '<div class="col s1">&nbsp;</div>'; // Fill empty days until first day of month
+            }
+            for (let day = 1; day <= numDays; day++) {
+                if ((day + firstDayOfMonth - 1) % 7 === 0 && day > 1) {
+                    calendar.innerHTML += dayRow + '</div>'; // End the current row of days
+                    dayRow = '<div class="row">'; // Start a new row
+                }
+                dayRow += `<div class="col s1">${day}</div>`; // Add the day
+            }
+            calendar.innerHTML += dayRow + '</div>'; // Add any remaining days
         }
-
+    
+        function changeMonth(change) {
+            currentDate.setMonth(currentDate.getMonth() + change);
+            updateCalendarView();
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit();
+            updateCalendarView();
+        });
         function changeMonth(change) {
             // Change the current month and update the calendar view
             currentDate.setMonth(currentDate.getMonth() + change);
