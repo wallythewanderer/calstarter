@@ -3,6 +3,10 @@ const mysql = require('mysql');
 const app = express();
 const port = 3000;
 
+// You don't need to require body-parser since express has this functionality built-in
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+
 // Configure express to use ejs
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -55,6 +59,27 @@ app.get("/tasks/:id", (req, res) => {
             return res.sendStatus(500);
         }
         res.render("task_detail", { task: result[0] });
+    });
+});
+
+app.post("/create-event", (req, res) => {
+    // Extract event data from request body
+    const { title, startDateTime, endDateTime, isRepeating, description } = req.body;
+    
+    // SQL Query to insert event into the database
+    const insertEventSql = `
+        INSERT INTO Events (Title, StartDateTime, EndDateTime, IsRepeating, Description)
+        VALUES (?, ?, ?, ?, ?);
+    `;
+    db.query(insertEventSql, [title, startDateTime, endDateTime, isRepeating, description], (err, result) => {
+        if (err) {
+            // Handle error (maybe render an error page or message)
+            console.error('Error inserting event into database', err);
+            res.status(500).send('Error inserting event');
+        } else {
+            // Redirect back to index.html upon successful insertion
+            res.redirect('/');
+        }
     });
 });
 
