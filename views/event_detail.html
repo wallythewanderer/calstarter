@@ -58,10 +58,10 @@
             let dateElems = document.querySelectorAll('.datepicker');
             let timeElems = document.querySelectorAll('.timepicker');
             M.Datepicker.init(dateElems, {
-                // You can specify options here, such as format, if needed
+                // format placeholder
             });
             M.Timepicker.init(timeElems, {
-                // You can specify options here, such as 12 or 24 hour format, if needed
+                // format placeholder
             });
         });
 
@@ -77,7 +77,7 @@
             formData.set('startDateTime', startDateTime); // Use set method to update the formData object
             formData.set('endDateTime', endDateTime); // Use set method to update the formData object
 
-            // If the repeating checkbox is not checked, ensure we send a value of '0'
+            // If the repeating checkbox is not checked, send value of '0'
             if(!document.getElementById('is_repeating').checked) {
                 formData.set('is_repeating', '0');
             }

@@ -8,7 +8,7 @@ app.get("/api/events-tasks", (req, res) => {
     const eventsQuery = "SELECT * FROM Events";
     const tasksQuery = "SELECT * FROM Tasks";
     
-    // Execute queries to fetch data (this example assumes both tables exist)
+    // Execute queries to fetch data
     db.query(eventsQuery, (err, eventsResult) => {
         if (err) {
             console.error('Error fetching events', err);
@@ -33,7 +33,7 @@ app.get("/api/events-tasks", (req, res) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
-// Configure express to use ejs
+// Configure express to use ejs (future implementation)
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
