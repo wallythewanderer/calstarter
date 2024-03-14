@@ -29,4 +29,31 @@ body {
     background-color: #90ee90; /* light green for tasks */
   }
 
-  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 days of the week */
+    grid-gap: 10px;
+}
+
+.calendar-day {
+    min-height: 100px; /* Adjust height as necessary */
+    background-color: #f9f9f9; /* Light grey background */
+    border: 1px solid #e0e0e0; /* Grey border */
+    padding: 5px;
+}
+
+.calendar-day .date {
+    font-weight: bold;
+}
+
+.calendar-day .events {
+    margin-top: 10px;
+}
+
+/* Style for empty days at the start of the calendar */
+.empty {
+    background-color: transparent;
+    border: none;
+}
+
+/* Add additional styling as needed */

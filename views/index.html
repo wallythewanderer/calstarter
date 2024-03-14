@@ -67,7 +67,24 @@
                 weekDaysRow += `<div class="col s1"><strong>${day}</strong></div>`;
             });
             weekDaysRow += '</div>';
-            calendar.innerHTML += weekDaysRow;
+            let calendarHTML = '<div class="calendar-grid">';
+
+            // Fill in the days with placeholders for events
+            for (let i = 0; i < firstDayOfMonth; i++) {
+                calendarHTML += '<div class="calendar-day empty"></div>'; // Empty days until the first day of the month
+            }
+            for (let day = 1; day <= numDays; day++) {
+                calendarHTML += `
+                    <div class="calendar-day">
+                        <div class="date">${day}</div>
+                        <div class="events">
+                            <!-- Events will be added here -->
+                        </div>
+                    </div>`;
+            }
+            calendarHTML += '</div>'; // Close the calendar grid
+
+            calendar.innerHTML = weekDaysRow + calendarHTML;
     
             // Fill in the days
             let dayRow = '<div class="row">';
